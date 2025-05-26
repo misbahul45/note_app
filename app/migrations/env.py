@@ -25,6 +25,10 @@ def run_migrations_offline():
 
 def run_migrations_online():
     connectable = engine_from_config(
+        # `config.get_section(config.config_ini_section)` is retrieving the configuration section
+        # specified by `config.config_ini_section` from the Alembic configuration. This section
+        # typically contains database connection settings and other configuration options needed for
+        # running migrations online.
         config.get_section(config.config_ini_section),
         prefix="sqlalchemy.",
         poolclass=pool.NullPool,

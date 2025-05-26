@@ -1,6 +1,5 @@
 from datetime import timedelta
-from os import access
-from typing import Dict
+from typing import Any 
 from fastapi import APIRouter, Depends, HTTPException
 from sqlalchemy.orm import Session
 from app.core.security import hash_password, verify_password
@@ -11,7 +10,7 @@ from app.schemas import APIResponse
 from app.schemas.users_schema import Login, Register
 from app.services.auth_services import create_access_token
 
-auth_router= APIRouter(
+auth_router = APIRouter(
     prefix="/auth",
     tags=["auth"],
     responses={404: {"description": "Not found"}}
@@ -19,8 +18,8 @@ auth_router= APIRouter(
 
 otp_setorage={}
 
-@auth_router.get("/login", response_model=APIResponse[Dict[str, str]])
-async def login(user_login:Login, db:Session=Depends(get_db)) -> APIResponse[None]:
+@auth_router.post("/login", response_model=APIResponse[Any])
+async def login(user_login:Login, db:Session=Depends(get_db)) -> APIResponse[Any]:
     db_user = db.query(User).filter(User.email == user_login.email).first()
     if not db_user:
         raise HTTPException(
@@ -39,19 +38,18 @@ async def login(user_login:Login, db:Session=Depends(get_db)) -> APIResponse[Non
     
     access_token_expires=timedelta(minutes=get_settings().JWT_ACCESS_TOKEN_EXPIRE_MINUTES)
 
-    access_token=create_access_token(
-        data={"sub":getattr(db_user,'id')},
+    access_token :str =create_access_token(
+        data={"sub":str(db_user.id), "email": db_user.email},
         expires_delta=access_token_expires
     )
 
     return APIResponse(
-        message="Successfully login"
-        status="succes"
+        message="Successfully login",
+        status="success",
         data={
-            "access_token":access_token
+            "access_token": access_token,
         }
     )
-    pass
 
 @auth_router.post("/register", response_model=APIResponse[None])
 async def register(user_register:Register, db:Session=Depends(get_db)) -> APIResponse[None]:

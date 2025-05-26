@@ -1,6 +1,6 @@
 from typing import Generic, TypeVar, Dict, Optional
 from pydantic import BaseModel
-from .users_schema import *
+from .auth_schema import *
 
 T = TypeVar("T")
 

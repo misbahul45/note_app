@@ -7,7 +7,7 @@ from app.core.settings import get_settings
 from app.db import get_db
 from app.db.models import User
 from app.schemas import APIResponse
-from app.schemas.users_schema import Login, Register
+from app.schemas.auth_schema import Login, Register
 from app.services.auth_services import create_access_token
 
 auth_router = APIRouter(

@@ -21,6 +21,7 @@ venv.bak/
 *.log
 logs/
 *.log.*
+.pylintrc
 
 # File database lokal
 *.db

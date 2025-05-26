@@ -1,12 +1,22 @@
 from logging.config import fileConfig
 from sqlalchemy import engine_from_config, pool
 from alembic import context
-from app.db.models import * # Sesuaikan dengan struktur proyekmu
+from app.core import get_settings  # Adjust import as needed
+from app.db.models import Base  # Adjust import as needed
+from dotenv import load_dotenv
+import os
+
+# Load environment variables from .env
+load_dotenv()
 
 config = context.config
 
 if config.config_file_name is not None:
     fileConfig(config.config_file_name)
+
+# Set the database URL from environment variable or alembic.ini
+database_url = get_settings().DATABASE_URL
+config.set_main_option("sqlalchemy.url", database_url)
 
 target_metadata = Base.metadata
 

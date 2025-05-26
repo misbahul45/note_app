@@ -1,7 +1,6 @@
 from datetime import datetime
 from uuid import UUID as PyUUID
-from pydantic import BaseModel, Field, EmailStr
-from typing import Optional, List
+from pydantic import BaseModel
 
 # Untuk NoteSummary jika diperlukan di skema User
 class NoteSummary(BaseModel):

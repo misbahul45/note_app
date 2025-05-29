@@ -13,8 +13,8 @@ class APIResponse(BaseModel, Generic[T]):
         super().__init__(
             status=status,
             message=message,
-            data=data if data is not None else {}
+            data=data if data else None
         )
 
     class Config:
-        from_attributes = True 
+        from_attributes = True

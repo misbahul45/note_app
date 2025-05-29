@@ -1,6 +1,6 @@
 from datetime import datetime, timedelta, timezone
 from typing import Dict, Any, Union
-from jose import jwt
+from jose import JWTError, jwt
 from app.core.settings import get_settings
 
 
@@ -27,3 +27,10 @@ def create_access_token(
         algorithm=get_settings().JWT_ALGORITHM
     )
     return encoded_jwt
+
+def decode_acces_token(token: str) -> Dict[str, Any] | None:
+    try:
+        payload=jwt.decode(token, get_settings().JWT_SECRET_KEY, algorithms=[get_settings().JWT_ALGORITHM])
+        return payload
+    except JWTError:
+        return None

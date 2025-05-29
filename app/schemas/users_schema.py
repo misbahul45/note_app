@@ -10,6 +10,7 @@ class UserCreate(BaseModel):
     password: str = Field(..., min_length=8)
     email: EmailStr
     avatar_url: Optional[str] = None
+    
 
 class UserUpdate(BaseModel):
     username: Optional[str] = Field(None, min_length=3, max_length=50)

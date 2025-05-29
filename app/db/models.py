@@ -37,6 +37,8 @@ class User(Base):
     # Relationship
     notes = relationship("Note", back_populates="user")
 
+ # Untuk mengizinkan konversi dari atribut SQLAlchemy ke Pydantic model
+
 
 class Tag(Base):
     __tablename__ = 'tag'

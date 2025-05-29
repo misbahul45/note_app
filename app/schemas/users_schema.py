@@ -2,7 +2,7 @@ from datetime import datetime
 from typing import List, Optional
 from pydantic import BaseModel, EmailStr, Field
 from uuid import UUID as PyUUID
-from app.schemas.notes_schema import NoteSummary
+from app.schemas.notes_schema import NoteBase
 
 
 class UserCreate(BaseModel):
@@ -25,7 +25,7 @@ class UserResponse(BaseModel):
     avatar_url: Optional[str]
     created_datetime: datetime
     updated_datetime: datetime
-    notes: Optional[List[NoteSummary]] = []
+    notes: Optional[List[NoteBase]] = []
 
     class Config:
         from_attributes = True
